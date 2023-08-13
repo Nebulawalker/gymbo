@@ -80,13 +80,13 @@ WSGI_APPLICATION = 'gymbo.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "HOST": "localhost",
-        "PORT": 54321,
-        "USER": "test_user",
-        "PASSWORD": "test123",
-        "NAME": "test_db"
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': env.str('DB_HOST'),
+        'PORT': env.int('DB_PORT'),
+        'USER': env.str('DB_USER'),
+        'PASSWORD': env.str('DB_PASSWORD'),
+        'NAME': env.str('DB_NAME')
     }
 }
 
