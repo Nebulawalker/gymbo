@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from pages.api import PagesAPIView, PageDetailView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/v1/pages', PagesAPIView.as_view()),
+    path('api/v1/page/<slug:slug>', PageDetailView.as_view(), name='page_detail'),
 ]
