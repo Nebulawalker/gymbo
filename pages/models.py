@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+from django.template.defaultfilters import slugify
 
 
 class ContentBlock(models.Model):
@@ -11,7 +13,9 @@ class ContentBlock(models.Model):
         max_length=200
     )
     views = models.IntegerField(
-        verbose_name='Количество показов'
+        verbose_name='Количество показов',
+        default=0,
+        editable=False
     )
     def __str__(self) -> str:
         return self.title
@@ -28,7 +32,9 @@ class Page(models.Model):
     ) 
     slug = models.SlugField(
         verbose_name='Название в виде url',
-        max_length=200
+        max_length=200,
+        null=False,
+        unique=True
     )
     content_blocks = models.ManyToManyField(
         to=ContentBlock,
@@ -37,6 +43,14 @@ class Page(models.Model):
     )
     def __str__(self) -> str:
         return self.title
+    
+    def get_absolute_url(self):
+        return reverse('page_detail', kwargs={'slug': self.slug})
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
     
     class Meta:
         verbose_name = 'Страница'
