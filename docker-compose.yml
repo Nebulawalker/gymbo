@@ -1,0 +1,17 @@
+
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres
+    container_name: test_postgres_db
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: test123
+      POSTGRES_USER: test_user
+      POSTGRES_DB: test_db
+      PGDATA: ~/postgres/data
+      POSTGRES_INITDB_ARGS: "-A md5"
+    ports:
+      - "54321:5432"
