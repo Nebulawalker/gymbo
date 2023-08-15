@@ -57,3 +57,27 @@ class Page(models.Model):
     class Meta:
         verbose_name = 'Страница'
         verbose_name_plural = 'Страницы'
+
+
+class Impression(models.Model):
+    page = models.ForeignKey(
+        to=Page,
+        verbose_name='Страница на которой находится контент-блок',
+        related_name='page',
+        on_delete=models.CASCADE
+    )
+    content_block = models.ForeignKey(
+        to=ContentBlock,
+        verbose_name='Контент-блок',
+        related_name='impression',
+        on_delete=models.CASCADE
+    )
+    quantity = models.IntegerField(
+        verbose_name='Количество показов на конкретной странице',
+        default=0,
+        editable=False
+    )
+
+    class Meta:
+        verbose_name = 'Показ'
+        verbose_name_plural = 'Показы'
